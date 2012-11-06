@@ -4,6 +4,28 @@
 										××××××××××××××××××××××××××××××××××××
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+版本: 2.6.1    时间: 2012-11-01    人员：梁东成
+
+1、MVC 框架升级：
+	1) 支持多入口 Action（请求格式：http://.../.../<action_name>!<entry_name>.<action_suffix>）
+	2) Action 拦截器的过滤规则可以细化到 Action 入口方法级别
+	3) @FormBean 注解可声明在 Action 的入口方法中（覆盖 Action 类定义中的 @FormBean 声明）
+	4) @FormBean 注解支持成员变量注入（即：属性没有定义公共 setter 方法的成员变量也能注入）
+	5) 增加 @DaoBean 和 @DaoBeans, 支持 DAO 对象注入（不用显式调用 FacadeProxy.create(...) 方法创建 DAO 代理对象）
+	6) 添加内置 Request Attribute -> '__base'（HTTP 请求的 BASE URL）
+	7) 添加内置 Application Attribute -> '__context'（Servlet Context 的 ROOT PATH）
+	8) 修改 base.jsp，用 {__base} 取代 {basePath} 
+	9) MVC 配置文件支持多重“include”（即：从配置文件也可以“include”其它配置文件），并能自动过滤重复文件
+	10) 优化 MVC 框架的缓存机制，提升框架性能
+	11) 示例工程 MyPortal 增加 Freemarker 整合示例
+	
+2、DAO 框架升级：
+	1) 增加 FacadeProxy.create(...) 系列 DAO 访问方法
+	2) 为 DAO 类添加 @Transaction 注解，与 FacadeProxy.create(...) 系列方法配合使用
+	3) FacadeProxy.create(...) 系列方法支持在 Action 中自动注入 DAO 对象（利用  @DaoBean 或 @DaoBeans 注解） 
+	4) 优化 DAO 框架的缓存机制，提升框架性能
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 版本: 2.5.4    时间: 2012-09-03    人员：梁东成
 
 1、修改 HttpHelper 和 ActionSupport 的 getParam()方法，获取请求参数值时对其执行 Trim 操作，去除其前后空格
