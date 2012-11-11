@@ -1,4 +1,3 @@
-#labels Featured,Phase-Design,Phase-Support
 =版本: 2.6.1    时间: 2012-11-01=
 
 ===1、MVC 框架升级：===
