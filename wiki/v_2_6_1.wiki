@@ -28,11 +28,9 @@
 
 ----
 
-==测试工程（MyPortal）部署步骤==
-
+==测试工程部署==
+===部署步骤：===
 {{{
-测试步骤：
-
 1、创建 mysql 数据库：myportal
 2、执行脚本：myportal.sql
 3、把 MyPortal 项目加入 MyEclipse 的 Workspace
