@@ -5,16 +5,16 @@
 
 ===增加 Spring 支持===
 {{{
-	1) 增加  Spring 插件包 portal-basic-ext-spring-2.6.2.jar 用于整合 Spring
-	2) Action 通过 @SpringBean/@SpringBeans 注解声明 Spring Bean
-	3) Action 通过拦截器 com.bruce.ext.spring.SpringInjectFilter 解析 @SpringBean/@SpringBeans 注解并注入 Spring Bean
-	4) Portal-Basic 的 DAO 对象能声明为 Spring Bean，从而能在 Spring 环境下使用 Portal-Basic DAO 子框架
-	5) 示例工程 MyPortal 增加 Spring 整合示例
+1、增加  Spring 插件包 portal-basic-ext-spring-2.6.2.jar 用于整合 Spring
+2、Action 通过 @SpringBean/@SpringBeans 注解声明 Spring Bean
+3、Action 通过拦截器 com.bruce.ext.spring.SpringInjectFilter 解析 @SpringBean/@SpringBeans 注解并注入 Spring Bean
+4、Portal-Basic 的 DAO 对象能声明为 Spring Bean，从而能在 Spring 环境下使用 Portal-Basic DAO 子框架
+5、示例工程 MyPortal 增加 Spring 整合示例
 }}}
 
 ===其他更新===
 {{{
-	1) @FormBean、@DaoBean/@DaoBeans、@SpringBean/@SpringBeans 和  @Transaction 声明为 '@Inherited'，子类可继承父类的注解
+1、@FormBean、@DaoBean/@DaoBeans、@SpringBean/@SpringBeans 和  @Transaction 声明为 '@Inherited'，子类可继承父类的注解
 }}}
 
 ----
