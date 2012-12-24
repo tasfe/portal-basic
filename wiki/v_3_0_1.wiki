@@ -53,7 +53,7 @@
 	REST 配置文件 -> REST			(参考：rest-config.xsd)
 }}}
 
-===其他更新===
+===应用程序升级说明===
 {{{
 Portal-Basic-3.x 在功能与配置方面完全兼容 Portal-Basic-2.x，但有两处地方需要调整：
 1) 由于原 com.bruce.util.basedao 包改为 com.bruce.dao，因此需要修改应用程序代码中对这些类的依赖路径并重新编译；
