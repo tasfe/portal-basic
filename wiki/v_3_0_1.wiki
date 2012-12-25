@@ -30,10 +30,10 @@
 	（当 ‘/a/b/c/MyAction’ 不出存在时，不再尝试查找默认包中的 ‘/MyAction’）
 3) 包结构更新：原 com.bruce.util.basedao 包改为 com.bruce.dao
 4) 修改配置文件的跟元素名称: 
-	应用程序配置文件 -> APP			(参考：app-config.xsd)
-	MVC 主配置文件 -> MVC-MAIN		(参考：mvc-config-main.xsd)
-	MVC 从配置文件 -> MVC-INCLUDE	(参考：mvc-config-include.xsd)
-	REST 配置文件 -> REST			(参考：rest-config.xsd)
+	应用程序配置文件 -> APP        (参考：app-config.xsd)
+	MVC 主配置文件 -> MVC-MAIN     (参考：mvc-config-main.xsd)
+	MVC 从配置文件 -> MVC-INCLUDE  (参考：mvc-config-include.xsd)
+	REST 配置文件 -> REST          (参考：rest-config.xsd)
 }}}
 
 ===应用程序升级说明===
