@@ -8,23 +8,6 @@
 1) 根据 Action 请求的地址信息自动加载 Action，并调用相应的入口方法处理请求
 2) 根据 Action 请求的地址信息和 Action Result 自动组合出输出页面的地址并转发
 3) 通过 @Result/@Results 和 @ExceptionMapping/@ExceptionMappings 注解自定义 Result 和 Exception 处理策略
-4) Action Convention 相关查找规则：
-	A、【Action Entry】
-		-> Action Entry 配置
-			-> Action Convention（自动匹配）
-	B、【Action Result】
-		-> Action Entry 的 Result 配置
-			-> Action 的 Result 配置
-				-> Action 入口方法的 @Result/@Results 注解
-					-> Action 类的 @Result/@Results 注解
-						-> 全局 Result 配置
-							-> Action Convention（自动匹配）
-	C、【Exception Mapping】
-		-> Action Entry 的 Exception-Mapping 配置
-			-> Action 的 Exception-Mapping 配置
-				-> Action 入口方法的 @ExceptionMapping/@ExceptionMappings 注解
-					-> Action 类的 @ExceptionMapping/@ExceptionMappings 注解
-						-> 全局 Exception-Mapping 配置
 }}}
 
 ===增加 REST 支持===
