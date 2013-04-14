@@ -15,7 +15,7 @@
 2) com.bruce.ext.rest.RestActionSupport 增加异步处理支持
 }}}
 
-===增加两个 JDBC SessionMgr===
+===增加两个 JDBC SessionMgr ===
 {{{
 1) com.bruce.dao.jdbc.DruidSessionMgr ：使用 Druid 连接池连接数据库
 2) com.bruce.dao.jdbc.JndiSessionMgr  ：使用 JNDI 连接池连接数据库
