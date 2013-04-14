@@ -31,7 +31,6 @@
 
 ===应用程序升级说明===
 {{{
-Portal-Basic-3.x 在功能与配置方面完全兼容 Portal-Basic-2.x，但有两处地方需要调整：
 1) Portal-Basic 3.1.1 的 “异步处理” 功能只适用于支持 Servlet 3.0 的应用环境（如：JaveEE 6 / Tomcat 7）
 2) 如果应用环境不支持 Servlet 3.0（如：JaveEE 5 / Tomcat 6），则只能使用原有功能
 3) Portal-Basic 3.1.1 不再提供 JDK 1.5 的兼容版本
