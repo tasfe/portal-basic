@@ -25,7 +25,7 @@
 {{{
 1) 测试工程 MyPortal 加入异步处理 Action 请求和异步 Rest Action 请求示例
 2) 测试工程 MyPortal 的所有 Hibernate 和 JDBC 示例都使用 Druid 取代原来的 Proxool 连接池
-3) 开发手册《Portal-Basic Java Web 应用开发框架(v3.1.20130420)》加入 “异步 Action” 章节
+3) 开发手册《Portal-Basic Java Web 应用开发框架(v3.1.20130425)》加入 “异步 Action” 章节
 4) Portal-Basic 的依赖库 “portal-basic-lib” 和 “spring-lib” 中的所有 jar 包更新到最新版本
 }}}
 
