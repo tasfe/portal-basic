@@ -5,6 +5,73 @@
    
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+版本: 3.2.1    时间: 2013-07-07    人员：梁东成
+
+1、Portal-Basic 框架正式更名为 JessMA：
+	1) JessMA 的版本号沿用 Portal-Basic 的版本号
+	2) 包名称 com.bruce.* 统一改为 org.jessma.*
+
+2、mvc-confing.xml 中增加 <base-path> 配置项，支持自定义 ${__base} 变量，满足某些特殊应用程序的需要
+	1) base-path.type 有三种类型：'auto'，'manual'，'none'，其中 'auto' 为默认类型
+	2) 'auto'：根据当前请求的路径信息自动设置 ${__base}（${__base} 保存在 Request Attribute 中）
+		${__base} = {scheme}://{server_name}:{server_port}/{app_context}
+	3) 'manual'：在 MVC 配置文件中手工设置 ${__base}（${__base} 保存在 Application Attribute 中）
+	4) 'none'：不设置 ${__base}
+
+3、mvc-confing.xml 中增加 <result-path-aliases> 配置项，支持用别名置换 Action Result 的路径，例如：
+
+		<result-path-aliases>
+			<alias name="index" path="/jsp/index.jsp"/>
+			<alias name="jsp_base" path="/jsp/test"/>
+		</result-path-aliases>
+
+	以下的几个配置是等效的：
+	
+	1) 不使用别名
+		<result>/jsp/index.jsp</result>		或注解 @Result(path="/jsp/index.jsp")
+		<result>/jsp/test/my.jsp</result>	或注解 @Result(path="/jsp/test/my.jsp")
+	2) 使用别名
+		<result>${index}</result> 			或注解 @Result(path="${index}")
+		<result>${jsp_base}/my.jsp</result>	或注解 @Result(path="${jsp_base}/my.jsp")
+
+4、支持在不重启服务器的情况下，动态更新应用程序配置
+	1) 更新 MVC 配置。org.jessma.mvc.ActionDispatcher 增加方法：
+		A) reload(delay)	更新 MVC 配置
+		B) pause()			暂停 MVC 组件
+		C) resume()			恢复 MVC 组件
+		D) 以上三个方法配合使用：pause() -> reload(delay) -> resume()
+	2) 更新 REST 配置。org.jessma.ext.rest.RestDispatcher 增加方法：
+		A) reload(delay)	更新 REST 配置
+		B) pause()			暂停 REST 组件
+		C) resume()			恢复 REST 组件
+		D) 以上三个方法配合使用：pause() -> reload(delay) -> resume()
+	3) 更新应用程序配置文件（app-config.xml）的 <user> 节点。org.jessma.app.AppConfig 增加方法：
+		A) reloadUserConfig(delay)	调用由 <system>/<user-config-parser> 节点定义的 UserConfigParser 
+									的 parse(user) 方法重新加载 <user> 节点的配置信息
+		B) 执行更新前通常需要暂停 MVC 组件 或 REST 组件（调用它们的 pause() 方法）
+
+5、修改 org.jessma.util.Logger，使 Logger 类更通用
+	1) 默认日志记录器：应用程序默认日志记录器的名称为 'JessMA'，可以调用 Logger.getDefaultLogger() 获取默认日志记录器
+	2) 其他日志记录器：应用程序可以在任何地方调用 new Logger("<logger_name>") 获取在 log4j.properties 中配置的其他日志记录器
+
+6、增加一个 JDBC SessionMgr
+	1) org.jessma.dao.jdbc.JdbcSessionMgr ：没有使用连接池的 JDBC SessionMgr
+
+7、其它更新：
+	1) 原测试工程 MyPortal 改为 MyJessMA
+	2) 原依赖库 portal-basic-lib 改为 jessma-lib
+	3) 依赖库 “jessma-lib” 和 “spring-lib” 中的所有 jar 包更新到最新版本
+	4) 更好地支持在 GAE、BAE 和 OpenShift 等云平台中部署 JessMA 应用程序
+	5) 更新开发手册《JessMA 高效 Java MVC & REST 开发框架 (v3.2)》
+	6) 官方网站 www.jessma.org 将陆续提供各项技术支持
+
+8、应用程序升级说明。JessMA 3.2.1 在功能方面完全兼容 Portal-Basic 3.1.1，原有应用程序升级到 JessMA 3.2.1 需做以下工作：
+	1) 应用程序中所有用到 com.bruce.* 的地方都改为 org.jessma.*
+	2) 修改 XML 配置文件的 XSD Schema 引用（参考 MyJessMA 测试工程）
+	3) 如果应用程序用到 org.jessma.util.Logger，则获取日志记录器对象的代码要作一些调整（参考 MyJessMA 测试工程）
+	4) 如果应用程序用到  base.jsp，则用 JessMA 3.2.1 的 jessma-base.jsp 替换原来的 base.jsp
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 版本: 3.1.1    时间: 2013-04-25    人员：梁东成
 
 1、支持异步 Action（“异步处理” 是 Servlet 3.0 的新特性之一）：
@@ -107,7 +174,7 @@
 	5) 增加 @DaoBean/@DaoBeans, 支持 DAO 对象注入（不用显式调用 FacadeProxy.create(...) 方法创建 DAO 代理对象）
 	6) 添加内置 Request Attribute -> '__base'（HTTP 请求的 BASE URL）
 	7) 添加内置 Application Attribute -> '__context'（Servlet Context 的 ROOT PATH）
-	8) 修改 base.jsp，用 {__base} 取代 {basePath} 
+	8) 修改 jessma-base.jsp，用 {__base} 取代 {basePath} 
 	9) MVC 配置文件支持多重“include”（即：从配置文件也可以“include”其它配置文件），并能自动过滤重复文件
 	10) 优化 MVC 框架的缓存机制，提升框架性能
 	11) 示例工程 MyPortal 增加 Freemarker 整合示例
