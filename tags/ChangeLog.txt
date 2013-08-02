@@ -5,6 +5,47 @@
    
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+版本: 3.2.2    时间: 2013-08-15    人员：梁东成
+
+1、org.jessma.dao.hbn.HibernateSessionMgr 支持自动扫描实体对象：
+	1) 实体对象用 @Entity 注解取代 *.hbm.xml 映射文件（同时也不必在 hibernate.cfg.xml 中配置 ‘mapping’）
+	2) app-config.xml 中配置 HibernateSessionMgr 时，用第二个可选参数以正则表达式的格式指定实体对象所在包
+	
+		（例如：实体对象位于 ‘com.bruce.<任意子包>.model’ 中）
+		
+		<manager name="mgr-1" class="org.jessma.dao.hbn.HibernateSessionMgr">
+			<initialize-args>
+				<arg></arg>
+				<arg>com\.bruce\..+\.model</arg>
+			</initialize-args>
+		</manager>
+
+2、org.jessma.dao.mybatis.MyBatisSessionMgr 支持自动扫描 SQL Mapper 接口：
+	1) 不必在 mybatis.cfg.xml 中配置 ‘mapper’
+	2) app-config.xml 中配置 MyBatisSessionMgr 时，用第二个可选参数以正则表达式的格式指定 SQL Mapper 接口所在包
+	
+		（例如：SQL Mapper 接口位于 ‘com.bruce.<任意子包>.mapper’ 中）
+		
+		<manager name="mgr-2" class="org.jessma.dao.mybatis.MyBatisSessionMgr">
+			<initialize-args>
+				<arg></arg>
+				<arg>com\.bruce\..+\.mapper</arg>
+			</initialize-args>
+		</manager>
+
+3、所有 JDBC Session Manager 均取消 ‘isXml’ 配置参数，改为根据配置文件的扩展名自动识别配置文件类型：
+	1) 受影响的 Session Manager：DruidSessionMgr、JdbcSessionMgr、JndiSessionMgr、ProxoolSessionMgr
+
+4、其它更新：
+	1) 修改 org.jessma.util.PackageHelper，加入包扫描相关方法
+	2) 依赖库 “jessma-lib” 中的所有 jar 包更新到最新版本
+	3) 更新开发手册《JessMA 高效 Java MVC & REST 开发框架 (v3.2)》
+
+5、应用程序升级说明：
+	1) JessMA 3.2.1 升级到 JessMA 3.2.2：完全兼容，可直接升级
+	2) Portal-Basic 3.1.1 及更早版本升级到 JessMA 3.2.2：（参考 JessMA 3.2.1 的升级说明）
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 版本: 3.2.1    时间: 2013-07-07    人员：梁东成
 
 1、Portal-Basic 框架正式更名为 JessMA：
