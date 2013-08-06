@@ -46,7 +46,7 @@
   创建一个自定义事务（CustomTransaction），并调用 FacadeProxy 的 executeCustomTransaction(...) 来执行该自定义事务。
 2) 增加自定义事务相关接口：
 	A) CustomTransaction	: 自定义事务基接口
-	B) JdbcTransaction		: JDBC 自定义事务接口
+	B) JdbcTransaction	: JDBC 自定义事务接口
 	C) MyBatisTransaction	: MyBatis自定义事务接口
 	D) HibernateTransaction	: Hibernate 自定义事务接口
 		
