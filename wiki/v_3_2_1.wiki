@@ -9,7 +9,7 @@
 2) 包名称 com.bruce.* 统一改为 org.jessma.*
 }}}
 
-===mvc-confing.xml 中增加 <base-path> 配置项，支持自定义 ${__base} 变量，满足某些特殊应用程序的需要===
+===mvc-confing.xml 中增加 'base-path' 配置项，支持自定义 ${__base} 变量，满足某些特殊应用程序的需要===
 {{{
 1) base-path.type 有三种类型：'auto'，'manual'，'none'，其中 'auto' 为默认类型
 2) 'auto'：根据当前请求的路径信息自动设置 ${__base}（${__base} 保存在 Request Attribute 中）
@@ -18,7 +18,7 @@
 4) 'none'：不设置 ${__base}
 }}}
 
-=== mvc-confing.xml 中增加 <result-path-aliases> 配置项，支持用别名置换 Action Result 的路径 ===
+=== mvc-confing.xml 中增加 'result-path-aliases' 配置项，支持用别名置换 Action Result 的路径 ===
 {{{
 例如：
   <result-path-aliases>
