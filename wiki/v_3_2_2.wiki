@@ -1,4 +1,4 @@
-#labels Featured,Phase-Support,Phase-QA
+#labels Phase-Support,Phase-QA
 =版本: 3.2.2    时间: 2013-08-15=
 
 ==Change Log==
@@ -62,10 +62,10 @@
 			@Override
 			public void execute(HibernateSessionMgr mgr) throws DAOException
 			{
-				// 创建 dao1 （不能使用 FacadeProxy 创建 DAO 对象）
+				// 创建 dao1 （可以使用 FacadeProxy 创建 DAO 对象）
 				MyDaoA dao1 = new MyDaoA(mgr);
-				// 创建 dao2 （不能使用 FacadeProxy 创建 DAO 对象）
-				MyDaoB dao2 = new MyDaoB(mgr);
+				// 创建 dao2 （可以使用 ‘new MyDaoB(mgr)’ 创建 DAO 对象）
+				MyDaoB dao2 = FacadeProxy.create(MyDaoB.class, mgr);
 					
 				// 执行 DAO 方法
 				dao1.methodXxx();
