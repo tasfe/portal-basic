@@ -5,6 +5,82 @@
    
 
 －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+版本: 3.2.3    时间: 2013-09-25    人员：梁东成
+
+1、增加 Guice 支持：
+	1) 增加  Guice 插件包 jessma-ext-guice-3.2.3.jar 用于整合 Guice
+	2) Action 通过 @GuiceBean/@GuiceBeans 注解声明 Guice Bean
+	3) Action 通过拦截器 com.bruce.ext.guice.GuiceInjectFilter 解析 @GuiceBean/@GuiceBeans 注解并注入 Guice Bean
+	4) 可以在 Guice Bean 中注入 JessMA DAO 对象，从而能在 Guice 环境下使用 JessMA DAO 子框架
+	5) 示例工程 MyJessMA 增加 Guice 整合示例
+	
+	（注：通常情况下，应用程序需要创建 GuiceInjectFilter 的子类并改写 configModules() 方法，用于定义 Module 的绑定规则）
+	
+	public class MyGuiceInjectFilter extends GuiceInjectFilter
+	{
+		@Override
+		protected Collection<Module> configModules()
+		{
+			Set<Module> modules = new HashSet<Module>();
+			
+			// 加入第一个 Module
+			modules.add(new Module()
+			{
+				@Override
+				public void configure(Binder binder)
+				{
+					// 配置绑定规则
+					// ......
+				}
+			});
+			
+			// ......
+	
+			// 加入第 N 个 Module
+			modules.add(new Module()
+			{
+				@Override
+				public void configure(Binder binder)
+				{
+					// 配置绑定规则
+					// ......
+				}
+			});
+	
+			return modules;
+		}
+	}
+
+2、Form Bean 支持联级属性注入：
+	1) @FormBean 注解支持注入联级属性
+	2) org.jessma.util.BeanHelper 的 createBean(...) / setPropertiesOrFieldValues(...) 系列方法支持联级装配 Bean
+	
+		（例如：下面的 Form 对应的 Bean 中，b、x 和 y 为联级 Bean）
+		
+		<form>
+			 <input name="a" value="...">
+			 <input name="b.c" value="...">
+			 <input name="b.d" value="...">
+			 <input name="x.y.z" value="...">
+		</form>
+
+3、规范“嵌套 DAO 方法”调用规则（详情参考：开发手册第 10.6 节）
+	1) 最外层的 DAO 对象必须由 FacadeProxy 创建
+	2) 内层的 DAO 对象可以用 new 或 FacadeProxy 等任意方式创建
+	3) 最外层的 DAO 方法作为一个事务单元，并且不会有嵌套事务
+	4) 事务属性由最外层的 DAO 方法指定，忽略所有内层 DAO 方法的事务属性
+
+4、其它更新：
+	1) 依赖库 “jessma-lib” 中的所有 jar 包更新到最新版本
+	2) 依赖库 “spring-lib” 中的所有 jar 包更新到最新版本
+	3) 增加 Guice 依赖库 “guice-lib”
+	4) 更新开发手册《JessMA Java Web 应用开发框架 (v3.2.3)》
+
+5、应用程序升级说明：
+	1) JessMA 3.2.2 升级到 JessMA 3.2.3：完全兼容，可直接升级
+	2) Portal-Basic 3.1.1 及更早版本升级到 JessMA 3.2.3：（参考 JessMA 3.2.1 的升级说明）
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 版本: 3.2.2    时间: 2013-08-15    人员：梁东成
 
 1、org.jessma.dao.hbn.HibernateSessionMgr 支持自动扫描实体对象：
@@ -38,9 +114,9 @@
 	1) 受影响的 Session Manager：DruidSessionMgr、JdbcSessionMgr、JndiSessionMgr、ProxoolSessionMgr
 
 4、org.jessma.dao.FacadeProxy 增加方法 executeCustomTransaction(...) 支持执行自定义事务：
-	1) JessMA 的事务是 DAO 层事务，也就是说当外部调用某个 DAO 方法时，该方法作为一个事务单元执行。 但在一些特殊情形
-	       下可能需要在 DAO 外部执行 Service 层事务（例如：事务需要调用多个 DAO 对象的多个方法）， 此时需要创建一个自定
-	       义事务（CustomTransaction），并调用 FacadeProxy 的 executeCustomTransaction(...) 来执行该自定义事务。
+	1) JessMA 的事务是 DAO 层事务，也就是说当外部调用某个 DAO 方法时，该方法作为一个事务单元执行。 但在一些特殊情形下可能需要在 DAO 方法
+		外部执行事务（例如：作为一个事务单元调用多个 DAO 对象的多个方法）， 此时可以创建一个自定义事务（CustomTransaction），并调用 
+		FacadeProxy 的 executeCustomTransaction(...) 来执行该自定义事务。
 	2) 增加自定义事务相关接口：
 		A) CustomTransaction	: 自定义事务基接口
 		B) JdbcTransaction		: JDBC 自定义事务接口
@@ -59,10 +135,10 @@
 				@Override
 				public void execute(HibernateSessionMgr mgr) throws DAOException
 				{
-					// 创建 dao1 （不能使用 FacadeProxy 创建 DAO 对象）
+					// 创建 dao1 （可以使用 FacadeProxy 创建 DAO 对象）
 					MyDaoA dao1 = new MyDaoA(mgr);
-					// 创建 dao2 （不能使用 FacadeProxy 创建 DAO 对象）
-					MyDaoB dao2 = new MyDaoB(mgr);
+					// 创建 dao2 （可以使用 ‘new MyDaoB(mgr)’ 创建 DAO 对象）
+					MyDaoB dao2 = Facade.create(MyDaoB.class, mgr);
 					
 					// 执行 DAO 方法
 					dao1.methodXxx();
@@ -72,12 +148,35 @@
 				}});
 		}
 
-5、其它更新：
+5、扩大 mvc-confing.xml 中 <result-path-aliases> 别名配置应用范围：
+	1) 支持在 <result-path-aliases> 配置中引用前面定义的别名
+	
+		（示例：下面配置中 ${index} 的实际路径为 '/jsp/test/index.jsp'）
+		
+		<result-path-aliases>
+			<alias name="jsp_base" path="/jsp/test"/>
+			<alias name="index" path="${jsp_base}/index.jsp"/>
+		</result-path-aliases>
+
+	2) 允许在 <action-convention> 的 'dispatch-file-path' 和 'dispatch-file-path' 配置中使用别名
+	
+		（示例：下面配置中 'dispatch-file-path' 的实际路径为 '/jsp'）
+		
+		<action-convention
+			dispatch-file-path="${ac_path}"
+			<!-- 其它配置（略）... -->
+		/>
+		<result-path-aliases>
+			<alias name="ac_path" path="/jsp"/>
+		</result-path-aliases>
+
+6、其它更新：
 	1) 修改 org.jessma.util.PackageHelper，加入包扫描相关方法
 	2) 依赖库 “jessma-lib” 中的所有 jar 包更新到最新版本
-	3) 更新开发手册《JessMA 高效 Java MVC & REST 开发框架 (v3.2)》
+	3) 更新开发手册《JessMA 高效 Java MVC & REST 开发框架 (v3.2.2)》
+	4) 增加一个 JessMA 项目模板工程：HelloJessMA
 
-6、应用程序升级说明：
+7、应用程序升级说明：
 	1) JessMA 3.2.1 升级到 JessMA 3.2.2：完全兼容，可直接升级
 	2) Portal-Basic 3.1.1 及更早版本升级到 JessMA 3.2.2：（参考 JessMA 3.2.1 的升级说明）
 
