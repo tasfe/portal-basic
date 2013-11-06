@@ -17,9 +17,9 @@
 	<i18n default-locale="en_US" default-bundle="com.bruce.res.application-message" />
 	
 2) 支持基于 URL、Cookie 或浏览器语言选项的国际化方式
-	A) org.jessma.mvc.i18n.URLI18nFilter		：基于 URL 请求参数的国际化拦截器	
-	B) org.jessma.mvc.i18n.CookieI18nFilter		：基于 Cookie 的国际化拦截器
-	C) org.jessma.mvc.i18n.BrowserI18nFilter	：基于浏览器语言选项的国际化拦截器
+	A) org.jessma.mvc.i18n.URLI18nFilter	：基于 URL 请求参数的国际化拦截器	
+	B) org.jessma.mvc.i18n.CookieI18nFilter	：基于 Cookie 的国际化拦截器
+	C) org.jessma.mvc.i18n.BrowserI18nFilter：基于浏览器语言选项的国际化拦截器
 	D) JessMA 默认基于 Session 实现国际化，但可以通过配置上述拦截器改为相应的实现方式
 	E) 上述拦截器的国际化属性是基于 Request Attribute 的，因此会屏蔽 Session 的国际化设置
 	F) 上述拦截器可以组合使用，一般顺序为：URL -> Cookie -> Browser
