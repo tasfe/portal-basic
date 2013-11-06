@@ -45,9 +45,9 @@
 	
 	（参考：下面的 MVC 配置文件条目）
 	<!--
-		enable		：是否开启 Bean Validation 机制（默认：开启）
-		bundle		：验证文本消息的 Bundle（默认：res.validation-message）
-		validator	：验证器类（默认：org.jessma.mvc.validation.HibernateBeanValidator）
+		enable	 ：是否开启 Bean Validation 机制（默认：开启）
+		bundle	 ：验证文本消息的 Bundle（默认：res.validation-message）
+		validator：验证器类（默认：org.jessma.mvc.validation.HibernateBeanValidator）
 	-->
 	<bean-validation
 		enable="true"
