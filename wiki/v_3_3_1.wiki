@@ -11,15 +11,15 @@
 	（参考：下面的 MVC 配置文件条目）
 
 	<!--
-		default-locale	：应用程序默认语言选项（默认：与当前操作系统一致）
-		default-bundle	：应用程序默认 Bundle（默认：res.application-message）
+		default-locale ：应用程序默认语言选项（默认：与当前操作系统一致）
+		default-bundle ：应用程序默认 Bundle（默认：res.application-message）
 	-->
 	<i18n default-locale="en_US" default-bundle="com.bruce.res.application-message" />
 	
 2) 支持基于 URL、Cookie 或浏览器语言选项的国际化方式
-	A) org.jessma.mvc.i18n.URLI18nFilter		：基于 URL 请求参数的国际化拦截器	
-	B) org.jessma.mvc.i18n.CookieI18nFilter		：基于 Cookie 的国际化拦截器
-	C) org.jessma.mvc.i18n.BrowserI18nFilter	：基于浏览器语言选项的国际化拦截器
+	A) org.jessma.mvc.i18n.URLI18nFilter	：基于 URL 请求参数的国际化拦截器	
+	B) org.jessma.mvc.i18n.CookieI18nFilter	：基于 Cookie 的国际化拦截器
+	C) org.jessma.mvc.i18n.BrowserI18nFilter：基于浏览器语言选项的国际化拦截器
 	D) JessMA 默认基于 Session 实现国际化，但可以通过配置上述拦截器改为相应的实现方式
 	E) 上述拦截器的国际化属性是基于 Request Attribute 的，因此会屏蔽 Session 的国际化设置
 	F) 上述拦截器可以组合使用，一般顺序为：URL -> Cookie -> Browser
@@ -47,9 +47,9 @@
 	（参考：下面的 MVC 配置文件条目）
 
 	<!--
-		enable		：是否开启 Bean Validation 机制（默认：开启）
-		bundle		：验证文本消息的 Bundle（默认：res.validation-message）
-		validator	：验证器类（默认：org.jessma.mvc.validation.HibernateBeanValidator）
+		enable	 ：是否开启 Bean Validation 机制（默认：开启）
+		bundle	 ：验证文本消息的 Bundle（默认：res.validation-message）
+		validator：验证器类（默认：org.jessma.mvc.validation.HibernateBeanValidator）
 	-->
 	<bean-validation
 		enable="true"
